@@ -3,24 +3,30 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from ..databaseModels.clientMaster import ClientMaster
+# from django.core.exceptions import ObjectDoesNotExist
 import requests
 from ..serializers.CheckwhitelistedSerializer import ClientMasterSerializer
 
+
 class ClientMasterApi(APIView):
-    def post(self, req):
-        clientkey = req.data.get('clientkey')
-        url = req.headers.get('url')
+    def post(self, request):
+        client_key = request.data.get('clientkey')
+        url = request.headers.get('url')
         try:
-            user_obj = ClientMaster.objects.get(clientkey = clientkey, clientURL = url, status=1)
+            user_obj = ClientMaster.objects.get(clientkey=client_key)
             serializer = ClientMasterSerializer(user_obj).data
-            return Response({"message": "Valid","data":serializer}, status=status.HTTP_200_OK)       
+
+            if serializer['clientURL']!=url:
+                return Response({"message": "url Invalid "})
+            elif serializer['is_active']!=True:
+                return Response({"message": "status invalid"})   
+            return Response(serializer)
         except ClientMaster.DoesNotExist:
-            return Response({"message": " Not Valid" }, status=status.HTTP_400_BAD_REQUEST)
-    
-
-        
-            
-        
+               return Response({"message": "Invalid client key "}, status=status.HTTP_400_BAD_REQUEST)
 
 
+
+
+
+  
     
