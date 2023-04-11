@@ -8,19 +8,21 @@ from ..serializers.CheckwhitelistedSerializer import ClientMasterSerializer
 
 
 def Client(client_key,url):
-        user_obj = ClientMaster.objects.get(clientkey=client_key)
-        serializer = ClientMasterSerializer(user_obj).data
-        if serializer['clientURL']!=url:
-            return ({
-                 'status':202,
-                 'message': 'Your Url Invalid !!'
-            })
-        elif serializer['is_active']!=True:
-            return ({
-                 'status':203,
-                 'message': 'Your Status Invalid !!'       
-            })   
-        return serializer
+    user_obj = ClientMaster.objects.get(clientkey=client_key)
+    serializer = ClientMasterSerializer(user_obj).data
+    if serializer['clientURL']!=url:
+        return ({
+                'status': False,
+                'message': 'Your Url is Invalid !!'
+        })
+    elif serializer['is_active']!=True:
+        return ({
+                'status': False,
+                'message': 'Your Status  is Invalid !!'       
+        })   
+    return ({"data" : serializer, "status" : True})
+
+
     
 
 

@@ -52,6 +52,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+REST_FRAMEWORK = {
+    "EXCEPTION_HANDLER" : "app.utils.ExceptionHandler.custom_exception_handler"
+}
+
 ROOT_URLCONF = 'Visitbackend.urls'
 
 TEMPLATES = [
@@ -79,9 +83,9 @@ WSGI_APPLICATION = 'Visitbackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'chat',
+        'NAME': 'new',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'Raju@123',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     

@@ -19,4 +19,4 @@ class   ClientMaster(models.Model):
     #                          related_name="user")
 
     class Meta:
-        db_table = 'ClientMaster'
+        db_table = 'client_master'
